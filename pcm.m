@@ -14,13 +14,20 @@ x=255*(1+sin(2*pi*f*t))/2;
 for lvl=1:length(L)
     figure();
     X=Quant(x,L(lvl));
-    subplot(2,1,1)
+    subplot(3,1,1)
     stem(t,de2bi(X))
-    subplot(2,1,2)
-    plot(t,x,'b','LineWidth',1);
-    plot(t,X,'g','LineWidth',0.4);
+    xlabel('time');
+    subplot(3,1,2)
+    plot(t,x,'Color','green','LineWidth',1);
+    xlabel('time');
+    legend('original signal');
     grid on
-    legend('original signal','reconstructed signal');
+    subplot(3,1,3)
+    plot(t,X,'Color','red','LineWidth',0.4);
+    xlabel('time');
+    grid on
+    title(L(lvl));
+    legend('reconstructed signal');
     Snr=[Snr,SNRdB(X,x,fs)];
 end
 figure();
