@@ -14,10 +14,10 @@ x=255*(1+sin(2*pi*f*t))/2;
 for lvl=1:length(L)
     figure();
     X=Quant(x,L(lvl));
-    subplot(1,2,1)
+    subplot(2,1,1)
     stem(t,de2bi(X))
-    subplot(1,2,2)
-    plot(t,x,'r','LineWidth',1);
+    subplot(2,1,2)
+    plot(t,x,'b','LineWidth',1);
     plot(t,X,'g','LineWidth',0.4);
     grid on
     legend('original signal','reconstructed signal');
