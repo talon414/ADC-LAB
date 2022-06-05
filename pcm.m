@@ -25,8 +25,8 @@ for lvl=1:length(L)
 end
 figure();
 plot(flip(R),flip(Snr));
-xlabel('SNR');
-ylabel('bits');
+xlabel('bits');
+ylabel('SNR(dB)');
 grid on
 
 function X = Quant(x,lvl)
