@@ -5,7 +5,7 @@ close all;
 
 T=1;
 L=100;
-alpha=[0.4,0.6,0.8,1];
+alpha=[0,0.4,0.6,0.8,1];
 t=-4*T:1/L:4*T;
 N=2^nextpow2(length(t));
 RV=[];
@@ -19,8 +19,8 @@ for i=1:length(alpha)
     RV(i,:)=k1;
     figure();
     subplot(211);
-    tp=RCspec(time,T,alpha(i));
-    plot(time,tp)
+    [f2,fftr2]=FFT_Analog(RCspec(time,T,alpha(i)),1/L,'double-sided');
+    plot(f2,fftr2)
     grid on
     subplot(212)
     [f1,fftr]=FFT_Analog(RV(i,:),1/L,'double-sided');
