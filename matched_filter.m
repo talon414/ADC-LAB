@@ -70,10 +70,13 @@ ylabel('dcap(t)')
 grid on
 dido=SERP(Nsym,d,N,L,s,lvls,p_t,-8:2:12);
 figure()
-plot(dido)
+plot(-8:2:12,dido)
 grid on
 ylabel('ser')
 xlabel('bits')
+xticks(-8:2:12)
+yticks(sort(dido))
+
 function servals = SERP(Nsym,d,N,L,s,lvls,p_t,EsN0dB)
     for i=1:length(EsN0dB)
         D=L*Nsym/2;
