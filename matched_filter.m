@@ -13,10 +13,10 @@ for i=1:N
 end
 
 
-beta=0.3;
+b=0.3;
 Ts=1;
 t=-4:1/8:4;
-p_t=P_sig(t,beta,Ts);
+p_t=P_sig(t,b,Ts);
 Nsym=8;
 figure();
 plot(t,p_t);
@@ -29,7 +29,7 @@ EsN0dB=10*log10(log2(M))+EbN0dB;
 
 D=L*Nsym/2;
 
-P_s=Pwr(L,N,s);
+P_s=Pwr(L,s);
 
 noise_psd=0.5*P_s/power(10,EsN0dB(2)/10);
 
@@ -78,15 +78,15 @@ function dem = Demod(sig,lvl)
     end
 end
 
-function pwr = Pwr(L,N,s)
-    pwr=L*sum(s.*s)/N;
+function pwr = Pwr(L,s)
+    pwr=L*sum(s.*s)/length(s);
 end
 
-function pvals = P_sig(t,beta,Ts)
+function pvals = P_sig(t,b,Ts)
     %pvals(t) = (sin(pi.*t*(1-beta)/Ts)+4*beta.*t*cos(pi*t*(1+beta)./Ts))./(Ts*(pi.*t*(1-power(4*beta*t/Ts,2))/Ts));
     for i=1:length(t)
-        pvals(i)=(sin(pi*t(i)*(1-beta)/Ts)+4*beta*t(i)*cos(pi*t(i)*(1+beta)/Ts))/(Ts*(pi*t(i)*(1-power(4*beta*t(i)/Ts,2))/Ts));
+        pvals(i)=(sin(pi*t(i)*(1-b)/Ts)+4*b*t(i)*cos(pi*t(i)*(1+b)/Ts))/(Ts*(pi*t(i)*(1-power(4*b*t(i)/Ts,2))/Ts));
     end
-    pvals(t==0)=(1+beta*(4/pi-1))/Ts;
-    pvals(t==abs(Ts/(4*beta)))=beta*((1+2/pi)*sin(pi/(4*beta))+(1-2/pi)*cos(pi/(4*beta)))/(power(2,1/2)*Ts);
+    pvals(t==0)=(1+b*(4/pi-1))/Ts;
+    pvals(t==abs(Ts/(4*b)))=b*((1+2/pi)*sin(pi/(4*b))+(1-2/pi)*cos(pi/(4*b)))/(power(2,1/2)*Ts);
 end
