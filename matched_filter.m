@@ -55,7 +55,7 @@ plot(r(1:100))
 ylabel('r(t)')
 grid on
 subplot(212)
-stem(vcap(1:10))
+stem(vcap(1:20))
 ylabel('vcap(t)')
 grid on
 figure();
