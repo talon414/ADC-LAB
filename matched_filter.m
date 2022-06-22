@@ -35,9 +35,10 @@ noise_psd=0.5*P_s/power(10,EsN0dB(2)/10);
 
 r=s+power(noise_psd,1/2).*randn(1,length(s));
 
-scap=conv(r,p_t);
-vcap=scap((2*D+1):L:(length(scap)-2*D));
-
+scap1=conv(r,p_t);
+scap=scap1((2*D+1):L:(length(scap1)-2*D));
+Ep=sum(p_t.*p_t);
+vcap=scap./Ep;
 
 dcap=Demod(vcap,lvls);
 figure();
@@ -46,7 +47,7 @@ plot(s(1:500))
 ylabel('s(t)')
 grid on
 subplot(212)
-plot(scap(1:500))
+plot(scap1(1:500))
 ylabel('scap(t)')
 grid on
 figure();
@@ -67,6 +68,27 @@ subplot(212)
 stem(dcap(1:20))
 ylabel('dcap(t)')
 grid on
+dido=SERP(Nsym,d,N,L,s,lvls,p_t,-8:2:12);
+figure()
+plot(dido)
+grid on
+ylabel('ser')
+xlabel('bits')
+function servals = SERP(Nsym,d,N,L,s,lvls,p_t,EsN0dB)
+    for i=1:length(EsN0dB)
+        D=L*Nsym/2;
+        P_s=Pwr(L,s);
+        noise_psd=0.5*P_s/power(10,EsN0dB(i)/10);
+        r=s+power(noise_psd,1/2).*randn(1,length(s));
+        scap1=conv(r,p_t);
+        scap=scap1((2*D+1):L:(length(scap1)-2*D));
+        Ep=sum(p_t.*p_t);
+        vcap=scap./Ep;
+        dcap=Demod(vcap,lvls);
+
+        servals(i)=sum(1*(d ~= dcap))/N;
+    end
+end
 
 function dem = Demod(sig,lvl)
     for i=1:length(sig)
